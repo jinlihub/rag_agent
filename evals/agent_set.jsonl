@@ -1,0 +1,20 @@
+{"id": "ag-001", "category": "标的物检索", "question": "有哪些关于空调的采购项目？", "expect_tool": "search_postgresql", "expect_args": {"subject": "空调"}, "web": false, "note": "考标的物精确参数，不应退化成 keyword 泛搜"}
+{"id": "ag-002", "category": "标的物检索", "question": "标的物是复印纸的项目有哪些？", "expect_tool": "search_postgresql", "expect_args": {"subject": "复印纸"}, "web": false, "note": "与 ag-001 同类，验证参数提取稳定性"}
+{"id": "ag-003", "category": "企业中标", "question": "重庆稳信科技有限公司中标了哪些项目？", "expect_tool": ["search_postgresql", "search_knowledge_graph"], "expect_args": {}, "web": false, "note": "两个工具参数名不同（PG 用 keyword、图谱用 entity），只考工具选择不考参数"}
+{"id": "ag-004", "category": "企业中标", "question": "华润燃气作为中标人的项目有哪些？", "expect_tool": ["search_postgresql", "search_knowledge_graph"], "expect_args": {}, "web": false, "note": "与 ag-003 同类（查某企业中标项目），两个工具均可，只考工具选择"}
+{"id": "ag-005", "category": "条件筛选", "question": "2023年10月安徽省有哪些服务类的中标项目？", "expect_tool": "search_postgresql", "expect_args": {"province": "安徽", "category": "服务"}, "web": false, "note": "三个条件需同时落到参数上"}
+{"id": "ag-006", "category": "条件筛选", "question": "合肥市近半年的工程类中标项目", "expect_tool": "search_postgresql", "expect_args": {"city": "合肥", "category": "工程"}, "web": false, "note": "地域到市级，时间需换算"}
+{"id": "ag-007", "category": "条件筛选", "question": "中标金额最高的项目是哪一个？", "expect_tool": "search_postgresql", "expect_args": {"order": "amount"}, "web": false, "note": "考排序参数，而非自己遍历"}
+{"id": "ag-008", "category": "条件筛选", "question": "预算在1000万以上的项目有哪些？", "expect_tool": "search_postgresql", "expect_args": {}, "web": false, "note": "金额下限筛选，参数命名无强制要求，只考工具选对"}
+{"id": "ag-009", "category": "企业画像", "question": "安徽智谷机电科技有限公司的工商信息", "expect_tool": "search_knowledge_graph", "expect_args": {"entity": "智谷"}, "web": false, "note": "工商信息走知识图谱，不走 PG"}
+{"id": "ag-010", "category": "企业画像", "question": "这家公司有没有违法违规记录？华润燃气", "expect_tool": "search_knowledge_graph", "expect_args": {"entity": "华润"}, "web": false, "note": "违规记录在知识图谱的 violations 分支"}
+{"id": "ag-011", "category": "法规检索", "question": "供应商提出质疑的时限是多少天？", "expect_tool": "search_bidding_knowledge", "expect_args": {"query": "质疑"}, "web": false, "note": "法规条文类，走知识库"}
+{"id": "ag-012", "category": "法规检索", "question": "公开招标和邀请招标有什么区别？", "expect_tool": "search_bidding_knowledge", "expect_args": {"query": "公开招标"}, "web": false, "note": "概念类，语义检索"}
+{"id": "ag-013", "category": "法规检索", "question": "投标保证金一般不得超过预算金额的百分之多少？", "expect_tool": "search_bidding_knowledge", "expect_args": {"query": "投标保证金"}, "web": false, "note": "数字型条文"}
+{"id": "ag-014", "category": "统计聚合", "question": "按类别统计一下项目数量", "expect_tool": "search_postgresql", "expect_args": {"group_by": "category"}, "web": false, "note": "考 group_by 参数，而非自己数"}
+{"id": "ag-015", "category": "统计聚合", "question": "每个月中标项目数量趋势", "expect_tool": "search_postgresql", "expect_args": {"group_by": "month"}, "web": false, "note": "月份分组"}
+{"id": "ag-016", "category": "联网", "question": "2025年政府采购领域有哪些新出台的法规政策？", "expect_tool": "search_web", "expect_args": {}, "web": true, "note": "时效性内容，需联网；开启联网时至少调一次"}
+{"id": "ag-017", "category": "无需工具", "question": "你好，你叫什么名字？能做什么？", "expect_tool": null, "expect_args": {}, "web": false, "note": "寒暄不该调工具"}
+{"id": "ag-018", "category": "无需工具", "question": "谢谢你的回答", "expect_tool": null, "expect_args": {}, "web": false, "note": "致谢不该调工具"}
+{"id": "ag-019", "category": "指代澄清", "question": "那家公司中标了哪些项目？", "expect_tool": "ask_user", "expect_args": {}, "web": false, "note": "指代不明应先反问，不该猜一个公司去查"}
+{"id": "ag-020", "category": "指代澄清", "question": "帮我查一下那个项目", "expect_tool": "ask_user", "expect_args": {}, "web": false, "note": "同上，项目指代不明"}

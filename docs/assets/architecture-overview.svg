@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1180" viewBox="0 0 1920 1180" font-family="'Microsoft YaHei','Segoe UI','PingFang SC',sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/></marker></defs>
+<rect width="1920" height="1180" fill="#ffffff"/>
+<text x="60" y="54" font-size="27" fill="#1f2937" font-weight="bold" text-anchor="start" >招投标智能问答系统 · 系统架构图</text>
+<text x="60" y="82" font-size="13.5" fill="#6b7280" font-weight="normal" text-anchor="start" >FastAPI + Vue 3 + RAG 混合检索 + ReAct Agent · 分层架构（2026-11-05）</text>
+<rect x="1222" y="45" width="9" height="9" rx="2" fill="#409EFF"/>
+<text x="1237" y="54" font-size="11.5" fill="#6b7280" font-weight="normal" text-anchor="start" >前端</text>
+<rect x="1316" y="45" width="9" height="9" rx="2" fill="#67C23A"/>
+<text x="1331" y="54" font-size="11.5" fill="#6b7280" font-weight="normal" text-anchor="start" >应用</text>
+<rect x="1410" y="45" width="9" height="9" rx="2" fill="#E6A23C"/>
+<text x="1425" y="54" font-size="11.5" fill="#6b7280" font-weight="normal" text-anchor="start" >Agent</text>
+<rect x="1504" y="45" width="9" height="9" rx="2" fill="#2FB8B8"/>
+<text x="1519" y="54" font-size="11.5" fill="#6b7280" font-weight="normal" text-anchor="start" >检索</text>
+<rect x="1598" y="45" width="9" height="9" rx="2" fill="#7B61C4"/>
+<text x="1613" y="54" font-size="11.5" fill="#6b7280" font-weight="normal" text-anchor="start" >客户端</text>
+<rect x="1692" y="45" width="9" height="9" rx="2" fill="#F56C6C"/>
+<text x="1707" y="54" font-size="11.5" fill="#6b7280" font-weight="normal" text-anchor="start" >数据</text>
+<rect x="1786" y="45" width="9" height="9" rx="2" fill="#909399"/>
+<text x="1801" y="54" font-size="11.5" fill="#6b7280" font-weight="normal" text-anchor="start" >外部</text>
+<rect x="560" y="104" width="320" height="52" rx="26" fill="#ffffff" fill-opacity="1" stroke="#9ca3af" stroke-width="1.4"/>
+<circle cx="590" cy="130" r="7" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+<path d="M581,144 q9,-9 18,0" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+<text x="612" y="135" font-size="14" fill="#1f2937" font-weight="bold" text-anchor="start" >用户 · C 端提问 / B 端维护</text>
+<line x1="720" y1="156" x2="720" y2="184" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="60" y="186" width="1320" height="150" rx="14" fill="#E8F3FF" fill-opacity="1" stroke="#409EFF" stroke-width="1.8"/>
+<text x="84" y="214" font-size="15" fill="#409EFF" font-weight="bold" text-anchor="start" >前端层 · Vue 3.5 + TypeScript + Vite（:5173）</text>
+<rect x="90" y="228" width="300" height="74" rx="8" fill="#ffffff" fill-opacity="1" stroke="#409EFF" stroke-width="1.2"/>
+<path d="M93,236 v58" stroke="#409EFF" stroke-width="4" stroke-linecap="round"/>
+<text x="104" y="251" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >ChatView</text>
+<text x="104" y="270" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >流式问答 · 来源面板</text>
+<text x="104" y="286" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >深度思考 · 历史会话</text>
+<rect x="410" y="228" width="300" height="74" rx="8" fill="#ffffff" fill-opacity="1" stroke="#409EFF" stroke-width="1.2"/>
+<path d="M413,236 v58" stroke="#409EFF" stroke-width="4" stroke-linecap="round"/>
+<text x="424" y="251" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >LoginView</text>
+<text x="424" y="270" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >登录 · 注册</text>
+<text x="424" y="286" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >JWT 存 localStorage</text>
+<rect x="730" y="228" width="300" height="74" rx="8" fill="#ffffff" fill-opacity="1" stroke="#409EFF" stroke-width="1.2"/>
+<path d="M733,236 v58" stroke="#409EFF" stroke-width="4" stroke-linecap="round"/>
+<text x="744" y="251" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >QaListView</text>
+<text x="744" y="270" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >问答列表逐条维护</text>
+<text x="744" y="286" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >按簇处理 · 一键确认</text>
+<rect x="1050" y="228" width="300" height="74" rx="8" fill="#ffffff" fill-opacity="1" stroke="#409EFF" stroke-width="1.2"/>
+<path d="M1053,236 v58" stroke="#409EFF" stroke-width="4" stroke-linecap="round"/>
+<text x="1064" y="251" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >SystemMonitorView</text>
+<text x="1064" y="270" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >主机 / 进程资源监控</text>
+<text x="1064" y="286" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >近期日志 · 运行时长</text>
+<text x="90" y="326" font-size="11" fill="#6b7280" font-weight="normal" text-anchor="start" >Router 守卫 · Pinia(auth) · Axios REST · fetch + ReadableStream 逐帧解析 SSE</text>
+<line x1="720" y1="338" x2="720" y2="366" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="685.125" y="343.0" width="69.75" height="18" rx="4" fill="#ffffff"/>
+<text x="720.0" y="356.0" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="middle" >REST / SSE</text>
+<rect x="60" y="368" width="1320" height="112" rx="14" fill="#F0F9EB" fill-opacity="1" stroke="#67C23A" stroke-width="1.8"/>
+<text x="84" y="396" font-size="15" fill="#67C23A" font-weight="bold" text-anchor="start" >应用层 · FastAPI + Uvicorn（:8000）· 统一鉴权 · 落库 · 后台任务</text>
+<rect x="90" y="412" width="132" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="156.0" y="430" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >auth</text>
+<text x="156.0" y="445" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >认证</text>
+<rect x="236" y="412" width="190" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="331.0" y="430" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >chat</text>
+<text x="331.0" y="445" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >流式问答 SSE</text>
+<rect x="440" y="412" width="132" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="506.0" y="430" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >history</text>
+<text x="506.0" y="445" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >会话历史</text>
+<rect x="586" y="412" width="132" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="652.0" y="430" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >models</text>
+<text x="652.0" y="445" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >模型清单</text>
+<rect x="732" y="412" width="210" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="837.0" y="430" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >admin</text>
+<text x="837.0" y="445" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >维护 · 聚类 · 监控</text>
+<rect x="956" y="412" width="110" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1011.0" y="430" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >track</text>
+<text x="1011.0" y="445" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >埋点</text>
+<rect x="1080" y="412" width="130" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1145.0" y="430" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >vision</text>
+<text x="1145.0" y="445" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >图片解析</text>
+<line x1="720" y1="482" x2="720" y2="506" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="663.3375" y="485.0" width="113.32499999999999" height="18" rx="4" fill="#ffffff"/>
+<text x="720.0" y="498.0" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="middle" >问答请求 / 管理操作</text>
+<rect x="60" y="508" width="1320" height="182" rx="14" fill="#FDF6EC" fill-opacity="1" stroke="#E6A23C" stroke-width="1.8"/>
+<text x="84" y="536" font-size="15" fill="#E6A23C" font-weight="bold" text-anchor="start" >Agent 编排层 · agent/ · 意图路由 → 分支执行 → 收束</text>
+<rect x="80" y="548" width="240" height="122" rx="8" fill="#ffffff" fill-opacity="1" stroke="#E6A23C" stroke-width="1.2"/>
+<path d="M83,556 v106" stroke="#E6A23C" stroke-width="4" stroke-linecap="round"/>
+<text x="94" y="571" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >意图路由 intent.py</text>
+<text x="94" y="590" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >chitchat 正则零成本</text>
+<text x="94" y="606" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >faq / complex 小模型分类</text>
+<text x="94" y="622" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >失败一律降级 complex</text>
+<rect x="330" y="548" width="330" height="122" rx="8" fill="#ffffff" fill-opacity="1" stroke="#E6A23C" stroke-width="1.2"/>
+<path d="M333,556 v106" stroke="#E6A23C" stroke-width="4" stroke-linecap="round"/>
+<text x="344" y="571" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >ReAct 工具循环 agent.py</text>
+<text x="344" y="590" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >最多 3 轮 · 多工具并行</text>
+<text x="344" y="606" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >assess_quality 回填换参</text>
+<text x="344" y="622" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >ask_user / clarify 澄清</text>
+<rect x="670" y="548" width="220" height="122" rx="8" fill="#ffffff" fill-opacity="1" stroke="#E6A23C" stroke-width="1.2"/>
+<path d="M673,556 v106" stroke="#E6A23C" stroke-width="4" stroke-linecap="round"/>
+<text x="684" y="571" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >会话记忆 memory.py</text>
+<text x="684" y="590" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >最近 4 组逐字保留</text>
+<text x="684" y="606" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >更早 3 组滚动摘要</text>
+<text x="684" y="622" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >摘要失败不阻断问答</text>
+<rect x="900" y="548" width="260" height="122" rx="8" fill="#ffffff" fill-opacity="1" stroke="#E6A23C" stroke-width="1.2"/>
+<path d="M903,556 v106" stroke="#E6A23C" stroke-width="4" stroke-linecap="round"/>
+<text x="914" y="571" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >提示词 prompt.py</text>
+<text x="914" y="590" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >企业画像四节模板</text>
+<text x="914" y="606" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >分支收束提示词</text>
+<text x="914" y="622" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >深度思考 reasoning 事件</text>
+<rect x="1170" y="548" width="190" height="122" rx="8" fill="#ffffff" fill-opacity="1" stroke="#E6A23C" stroke-width="1.2"/>
+<path d="M1173,556 v106" stroke="#E6A23C" stroke-width="4" stroke-linecap="round"/>
+<text x="1184" y="571" font-size="13.5" fill="#1f2937" font-weight="bold" text-anchor="start" >质量关卡</text>
+<text x="1184" y="590" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >assess_quality</text>
+<text x="1184" y="606" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >ok / empty / weak / error</text>
+<text x="1184" y="622" font-size="10.8" fill="#6b7280" font-weight="normal" text-anchor="start" >collect_sources ≤ 20 条</text>
+<line x1="1380" y1="598" x2="1420" y2="598" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<line x1="250" y1="690" x2="250" y2="716" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="215.125" y="694.0" width="69.75" height="18" rx="4" fill="#ffffff"/>
+<text x="250.0" y="707.0" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="middle" >tool_calls</text>
+<rect x="60" y="718" width="650" height="200" rx="14" fill="#FEF7E8" fill-opacity="1" stroke="#D4A017" stroke-width="1.8"/>
+<text x="84" y="746" font-size="15" fill="#D4A017" font-weight="bold" text-anchor="start" >工具层 · tools/ · Pydantic ToolArgs → function calling</text>
+<rect x="76" y="758" width="300" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="226.0" y="776" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >search_bidding_knowledge</text>
+<text x="226.0" y="791" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >法条 · 政策 · FAQ 混合检索</text>
+<rect x="390" y="758" width="300" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="540.0" y="776" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >search_knowledge_graph</text>
+<text x="540.0" y="791" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >企业 · 中标 · 违规关联</text>
+<rect x="76" y="812" width="300" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="226.0" y="830" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >search_postgresql</text>
+<text x="226.0" y="845" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >项目 · 标的物（降级 MySQL）</text>
+<rect x="390" y="812" width="300" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="540.0" y="830" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >graph_query</text>
+<text x="540.0" y="845" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >Neo4j 预定义只读模板</text>
+<rect x="76" y="866" width="300" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="226.0" y="884" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >search_web / search_web_exa</text>
+<text x="226.0" y="899" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >Tavily / Exa MCP 联网</text>
+<rect x="390" y="866" width="300" height="46" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="540.0" y="884" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >ask_user</text>
+<text x="540.0" y="899" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >主动澄清 · 不查数据</text>
+<line x1="712" y1="818" x2="730" y2="818" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="730" y="718" width="650" height="200" rx="14" fill="#E6F7F7" fill-opacity="1" stroke="#2FB8B8" stroke-width="1.8"/>
+<text x="754" y="746" font-size="15" fill="#2FB8B8" font-weight="bold" text-anchor="start" >检索层 · retrieval/</text>
+<rect x="800" y="754" width="190" height="42" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="895.0" y="772" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >稠密 + 稀疏并行召回</text>
+<text x="895.0" y="787" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >numpy 点积 · 字符 bigram</text>
+<line x1="990" y1="775" x2="1014" y2="775" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="1014" y="754" width="140" height="42" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1084.0" y="772" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >加权 RRF 融合</text>
+<text x="1084.0" y="787" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >法规/概念/通用</text>
+<line x1="1154" y1="775" x2="1178" y2="775" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="1178" y="754" width="136" height="42" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1246.0" y="772" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >小模型重排</text>
+<text x="1246.0" y="787" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >候选 ≥ 8</text>
+<text x="752" y="820" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" >两路召回 → 按问题类型加权 RRF → 重排</text>
+<text x="752" y="836" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" >重排关闭或失败时回退融合序</text>
+<rect x="752" y="850" width="290" height="48" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="897.0" y="868" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >结构化查询 sql_search</text>
+<text x="897.0" y="883" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >企业 / 项目 / 中标</text>
+<rect x="1054" y="850" width="290" height="48" rx="7" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1199.0" y="868" font-size="11.6" fill="#1f2937" font-weight="bold" text-anchor="middle" >FAQ 增量重建 faq_index</text>
+<text x="1199.0" y="883" font-size="9.8" fill="#6b7280" font-weight="normal" text-anchor="middle" >仅重算 80+ 条 · 原子替换</text>
+<line x1="1050" y1="920" x2="1050" y2="946" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="1003.8375" y="924.0" width="92.32499999999999" height="18" rx="4" fill="#ffffff"/>
+<text x="1050.0" y="937.0" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="middle" >读取索引 / 查询</text>
+<rect x="60" y="948" width="1320" height="142" rx="14" fill="#FFF0F0" fill-opacity="1" stroke="#F56C6C" stroke-width="1.8"/>
+<text x="84" y="976" font-size="15" fill="#F56C6C" font-weight="bold" text-anchor="start" >数据层 · 业务数据与应用数据分离 · 外部依赖可缺失时降级</text>
+<rect x="76" y="984" width="310" height="90" rx="8" fill="#ffffff" fill-opacity="1" stroke="#F56C6C" stroke-width="1.2"/>
+<g stroke="#F56C6C" stroke-width="1.3" fill="none"><ellipse cx="96" cy="1000" rx="9" ry="3.4"/><path d="M87,1000 v13 a9,3.4 0 0 0 18,0 v-13"/><path d="M87,1005 a9,3.4 0 0 0 18,0"/></g>
+<text x="114" y="1006" font-size="12.2" fill="#1f2937" font-weight="bold" text-anchor="start" >MySQL 8.0 · rag_cleaned</text>
+<text x="92" y="1028" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >应用表：qa_record · session_memory</text>
+<text x="92" y="1043" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >faq_qa_pairs · tracking_event</text>
+<text x="92" y="1058" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >业务表：企业 · 项目 · 政策</text>
+<rect x="402" y="984" width="310" height="90" rx="8" fill="#ffffff" fill-opacity="1" stroke="#F56C6C" stroke-width="1.2"/>
+<g stroke="#F56C6C" stroke-width="1.3" fill="none"><ellipse cx="422" cy="1000" rx="9" ry="3.4"/><path d="M413,1000 v13 a9,3.4 0 0 0 18,0 v-13"/><path d="M413,1005 a9,3.4 0 0 0 18,0"/></g>
+<text x="440" y="1006" font-size="12.2" fill="#1f2937" font-weight="bold" text-anchor="start" >文件向量索引 data/index/</text>
+<text x="418" y="1028" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >legal / policy / faq .npz</text>
+<text x="418" y="1043" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >.meta.jsonl 行号对齐</text>
+<text x="418" y="1058" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >BM25 查询时构建</text>
+<rect x="728" y="984" width="310" height="90" rx="8" fill="#ffffff" fill-opacity="1" stroke="#F56C6C" stroke-width="1.2"/>
+<g stroke="#F56C6C" stroke-width="1.3" fill="none"><ellipse cx="748" cy="1000" rx="9" ry="3.4"/><path d="M739,1000 v13 a9,3.4 0 0 0 18,0 v-13"/><path d="M739,1005 a9,3.4 0 0 0 18,0"/></g>
+<text x="766" y="1006" font-size="12.2" fill="#1f2937" font-weight="bold" text-anchor="start" >PostgreSQL 18 · bid_subjects</text>
+<text x="744" y="1028" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >含「标的物」列</text>
+<text x="744" y="1043" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >结构化项目检索优先</text>
+<text x="744" y="1058" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >不可用时降级 MySQL</text>
+<rect x="1054" y="984" width="310" height="90" rx="8" fill="#ffffff" fill-opacity="1" stroke="#F56C6C" stroke-width="1.2" stroke-dasharray="5 4"/>
+<g stroke="#F56C6C" stroke-width="1.3" fill="none"><ellipse cx="1074" cy="1000" rx="9" ry="3.4"/><path d="M1065,1000 v13 a9,3.4 0 0 0 18,0 v-13"/><path d="M1065,1005 a9,3.4 0 0 0 18,0"/></g>
+<text x="1092" y="1006" font-size="12.2" fill="#1f2937" font-weight="bold" text-anchor="start" >Neo4j · 采购交易图谱（可选）</text>
+<text x="1070" y="1028" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >预定义只读模板</text>
+<text x="1070" y="1043" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >graph_query 工具访问</text>
+<text x="1070" y="1058" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >未配置时返回可读提示</text>
+<rect x="1420" y="508" width="450" height="182" rx="14" fill="#F3F0FF" fill-opacity="1" stroke="#7B61C4" stroke-width="1.8"/>
+<text x="1444" y="536" font-size="15" fill="#7B61C4" font-weight="bold" text-anchor="start" >模型客户端层 · clients/</text>
+<rect x="1440" y="548" width="410" height="26" rx="5" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1452" y="565" font-size="11.2" fill="#1f2937" font-weight="bold" text-anchor="start" >llm_factory</text>
+<text x="1560" y="565" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >主模型 / 工具轮 / 深度思考</text>
+<rect x="1440" y="581" width="410" height="26" rx="5" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1452" y="598" font-size="11.2" fill="#1f2937" font-weight="bold" text-anchor="start" >zai_client</text>
+<text x="1560" y="598" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >智谱 GLM · OpenAI 兼容</text>
+<rect x="1440" y="614" width="410" height="26" rx="5" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1452" y="631" font-size="11.2" fill="#1f2937" font-weight="bold" text-anchor="start" >deepseek_client</text>
+<text x="1560" y="631" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >备选回答 · 评估评审</text>
+<rect x="1440" y="647" width="410" height="26" rx="5" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1452" y="664" font-size="11.2" fill="#1f2937" font-weight="bold" text-anchor="start" >vision_client</text>
+<text x="1560" y="664" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >GLM-4.6V 图片理解</text>
+<rect x="1420" y="718" width="450" height="200" rx="14" fill="#F5F5F5" fill-opacity="1" stroke="#909399" stroke-width="1.8"/>
+<text x="1444" y="746" font-size="15" fill="#909399" font-weight="bold" text-anchor="start" >外部服务 · 全部可缺失降级</text>
+<rect x="1440" y="762" width="410" height="28" rx="5" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1452" y="780" font-size="11.2" fill="#1f2937" font-weight="bold" text-anchor="start" >智谱开放平台</text>
+<text x="1548" y="780" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >GLM-5.3-Flash / GLM-4.6V / embedding-3</text>
+<rect x="1440" y="796" width="410" height="28" rx="5" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1452" y="814" font-size="11.2" fill="#1f2937" font-weight="bold" text-anchor="start" >DeepSeek</text>
+<text x="1548" y="814" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >备选回答 · 独立评估评审</text>
+<rect x="1440" y="830" width="410" height="28" rx="5" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1452" y="848" font-size="11.2" fill="#1f2937" font-weight="bold" text-anchor="start" >Tavily / Exa MCP</text>
+<text x="1548" y="848" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >联网搜索（前端开关控制）</text>
+<rect x="1440" y="864" width="410" height="28" rx="5" fill="#ffffff" fill-opacity="1" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1452" y="882" font-size="11.2" fill="#1f2937" font-weight="bold" text-anchor="start" >Langfuse</text>
+<text x="1548" y="882" font-size="10.2" fill="#6b7280" font-weight="normal" text-anchor="start" >链路观测（可选 · 失败静默）</text>
+<line x1="1645" y1="688" x2="1645" y2="716" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="1624.5625" y="693.0" width="40.875" height="18" rx="4" fill="#ffffff"/>
+<text x="1645.0" y="706.0" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="middle" >HTTPS</text>
+<rect x="1420" y="948" width="450" height="142" rx="14" fill="#F7F8FA" fill-opacity="1" stroke="#B1B3B8" stroke-width="1.8"/>
+<text x="1444" y="976" font-size="15" fill="#B1B3B8" font-weight="bold" text-anchor="start" >离线脚本与运维</text>
+<text x="1444" y="990" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" >init_db · build_index · import_xlsx_to_mysql</text>
+<text x="1444" y="1012" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" >cluster_unmaintained.py（聚类 + 草稿）</text>
+<text x="1444" y="1034" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" >start.sh 一键拉起 · system_monitor 日志</text>
+<text x="1444" y="1056" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" >evals/run_eval.py 自动指标 + 模型评审</text>
+<path d="M60,452 H30 V1012 H58" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<text x="44" y="760" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="middle" transform="rotate(-90,44,760)">落库 / 查询</text>
+<text x="60" y="1122" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" >说明：箭头表示主要调用方向；外部依赖（PostgreSQL / Neo4j / 重排 / 联网 / Langfuse）不可用时均按可读提示降级，不阻断问答主流程。</text>
+<text x="60" y="1146" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" >接口与事件契约见 docs/开发文档.md，检索算法细节见 docs/核心算法.md，组件级机制见 docs/组件工作机制.md。</text>
+</svg>

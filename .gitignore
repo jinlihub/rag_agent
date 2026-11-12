@@ -1,0 +1,33 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# 环境变量与本地数据
+.env
+.env.*
+!.env.example
+data/index/
+
+# 本地运行时产物（start.sh 的日志与 PID）
+.run/
+
+# Agent 评估报告产物
+evals/reports/
+
+# 前端依赖与构建产物
+node_modules/
+frontend/dist/
+
+# 本地临时目录与数据导出
+.extract/
+_export/
+.pytest_cache/
+.claude/
+*.log

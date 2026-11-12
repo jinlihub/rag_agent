@@ -1,0 +1,40 @@
+{"id": "gs-legal-01", "group": "legal", "category": "招标范围", "question": "哪些工程项目是法律强制要求必须走招标程序的？", "target_store": "legal", "expected_rows": [520, 291], "source": "《中华人民共和国招标投标法》· 必须进行招标的建设工程项目", "note": "口语化改写。291（发改委必须招标规定）列举了单项采购达到什么标准必须招标，可直接回答，故并列为可接受答案；921/2525 等只讲执行要求或行业项目，不算"}
+{"id": "gs-legal-02", "group": "legal", "category": "公平竞争", "question": "外地企业能不能参加本地项目的投标？招标方可以只限本地企业投吗？", "target_store": "legal", "expected_rows": [929], "source": "《中华人民共和国招标投标法》· 招投标活动不受地区和部门的限制", "note": "改写为外地企业的真实疑问"}
+{"id": "gs-legal-03", "group": "legal", "category": "采购方式", "question": "哪些项目必须走集中采购？集中采购目录是谁定的？", "target_store": "legal", "expected_rows": [1094], "source": "《中华人民共和国政府采购法》· 集中采购", "note": "两个子问题，均在本条内"}
+{"id": "gs-legal-04", "group": "legal", "category": "采购方式", "question": "政府采购的限额标准由哪个部门确定？", "target_store": "legal", "expected_rows": [1228], "source": "《中华人民共和国政府采购法》· 采购限额", "note": "短问题，考精确命中"}
+{"id": "gs-legal-05", "group": "legal", "category": "招标程序", "question": "招标项目开工前需要先办审批手续吗？资金没落实能招标吗？", "target_store": "legal", "expected_rows": [1406], "source": "《中华人民共和国招标投标法》· 招标项目的批准", "note": "改写为两个实务追问"}
+{"id": "gs-legal-06", "group": "legal", "category": "采购方式", "question": "政府采购必须买国产产品吗？什么情况下可以买进口的？", "target_store": "legal", "expected_rows": [1457, 593], "source": "《中华人民共和国政府采购法》· 本国采购与例外情形", "note": "593（政府采购进口产品管理办法）写明「应当采购本国产品，确需采购进口产品的实行审核管理」，原则与流程都能回答，故并列；1904/2469/1077/1839 只讲采购方式或审核材料，不算"}
+{"id": "gs-legal-07", "group": "legal", "category": "招标程序", "question": "公开招标和邀请招标到底有什么区别？", "target_store": "legal", "expected_rows": [1515], "source": "《中华人民共和国招标投标法》· 公开招标和邀请招标", "note": "概念对比类，偏语义检索"}
+{"id": "gs-legal-08", "group": "legal", "category": "招标程序", "question": "什么情况下可以用邀请招标，不用公开招标？", "target_store": "legal", "expected_rows": [1641], "source": "《中华人民共和国招标投标法》· 适用邀请招标的情形", "note": "与 gs-legal-07 相邻但目标条不同"}
+{"id": "gs-legal-09", "group": "legal", "category": "主体资格", "question": "招标人能不能不找代理机构，自己组织招标？需要备案吗？", "target_store": "legal", "expected_rows": [1653], "source": "《中华人民共和国招标投标法》· 自行办理招标和招标代理", "note": "三个子问题，考整条覆盖"}
+{"id": "gs-legal-10", "group": "legal", "category": "主体资格", "question": "评标专家跟投标企业有亲戚关系，还能参加评标吗？", "target_store": "legal", "expected_rows": [1682], "source": "《中华人民共和国政府采购法》· 回避制度", "note": "用「亲戚关系」而非「利害关系」，考语义泛化"}
+{"id": "gs-legal-11", "group": "legal", "category": "主体资格", "question": "开招标代理公司需要具备什么条件？", "target_store": "legal", "expected_rows": [1783], "source": "《中华人民共和国招标投标法》· 招标代理机构及条件", "note": "主体条件类"}
+{"id": "gs-legal-12", "group": "legal", "category": "主体资格", "question": "集中采购机构是什么性质的单位？由谁设立？", "target_store": "legal", "expected_rows": [2087], "source": "《中华人民共和国政府采购法》· 集中采购机构", "note": "机构定位类"}
+{"id": "gs-legal-13", "group": "legal", "category": "招标程序", "question": "公开招标的公告要发在哪些地方？公告里必须写哪些内容？", "target_store": "legal", "expected_rows": [2139], "source": "《中华人民共和国招标投标法》· 招标公告", "note": "载体 + 内容两个问点"}
+{"id": "gs-legal-14", "group": "legal", "category": "招标程序", "question": "邀请招标至少需要邀请几家单位来投标？", "target_store": "legal", "expected_rows": [2245], "source": "《中华人民共和国招标投标法》· 邀请招标方式的行使", "note": "数字类，考「三个以上」的命中"}
+{"id": "gs-legal-15", "group": "legal", "category": "主体资格", "question": "招标方可以要求投标人提供资质证明和业绩吗？能不能设门槛排除某些企业？", "target_store": "legal", "expected_rows": [2255], "source": "《中华人民共和国招标投标法》· 潜在投标人", "note": "权利与限制并存，考整条覆盖"}
+{"id": "gs-legal-16", "group": "legal", "category": "采购方式", "question": "纳入了集中采购目录的项目，还能自己采购吗？", "target_store": "legal", "expected_rows": [2279], "source": "《中华人民共和国政府采购法》· 集中采购与自行采购的适用情形", "note": "易与 gs-legal-03 混淆，考区分度"}
+{"id": "gs-legal-17", "group": "legal", "category": "主体资格", "question": "采购单位可以自己选代理机构吗？上级部门能指定吗？", "target_store": "legal", "expected_rows": [2358], "source": "《中华人民共和国政府采购法》· 采购代理机构的选择", "note": "易与 gs-legal-09 混淆"}
+{"id": "gs-legal-18", "group": "legal", "category": "招标程序", "question": "招标文件里必须写清楚哪些内容？", "target_store": "legal", "expected_rows": [2364, 2362], "source": "《中华人民共和国招标投标法》· 招标文件", "note": "2362（政府采购货物和服务招标投标管理办法）完整列举了招标文件应包括的主要内容，可独立回答，故并列；2745/2329 属行业办法，2687 只讲投标文件编制要求，均不算"}
+{"id": "gs-legal-19", "group": "legal", "category": "主体资格", "question": "参加政府采购的供应商需要具备什么资格条件？", "target_store": "legal", "expected_rows": [2630], "source": "《中华人民共和国政府采购法》· 供应商条件", "note": "六项条件的列举"}
+{"id": "gs-legal-20", "group": "legal", "category": "保密义务", "question": "招标方能不能透露已经买了招标文件的是哪些公司？标底要保密吗？", "target_store": "legal", "expected_rows": [2676], "source": "《中华人民共和国招标投标法》· 已获取招标文件者及标底的保密", "note": "两个保密义务"}
+{"id": "gs-faq-01", "group": "faq", "category": "单一来源", "question": "供应商针对单一来源异议被驳回，可以再次异议吗？", "target_store": "faq", "expected_rows": [0], "source": "FAQ 原文", "note": "问题取自 FAQ 本身，考自检索"}
+{"id": "gs-faq-02", "group": "faq", "category": "单一来源", "question": "软件升级服务可以用单一来源采购方式吗？", "target_store": "faq", "expected_rows": [2], "source": "FAQ 原文", "note": "场景判断类"}
+{"id": "gs-faq-03", "group": "faq", "category": "单一来源", "question": "单一来源采购文件需要写明所需货物的品牌和型号吗？", "target_store": "faq", "expected_rows": [5], "source": "FAQ 原文", "note": "文件要求类"}
+{"id": "gs-faq-04", "group": "faq", "category": "中标与合同", "question": "中标公告发出后发现第一名为无效投标时，招标人应如何处理？", "target_store": "faq", "expected_rows": [9], "source": "FAQ 原文", "note": "异常处理类"}
+{"id": "gs-faq-05", "group": "faq", "category": "中标与合同", "question": "中标通知书的发送对象是谁、效力如何？", "target_store": "faq", "expected_rows": [10], "source": "FAQ 原文", "note": "效力类"}
+{"id": "gs-faq-06", "group": "faq", "category": "质疑投诉", "question": "投标人或其他利害关系人对评标结果有异议应当如何处理？", "target_store": "faq", "expected_rows": [12], "source": "FAQ 原文", "note": "救济途径类"}
+{"id": "gs-faq-07", "group": "faq", "category": "中标与合同", "question": "招标人与中标人应何时订立书面合同？", "target_store": "faq", "expected_rows": [13], "source": "FAQ 原文", "note": "时限类"}
+{"id": "gs-faq-08", "group": "faq", "category": "保证金", "question": "招标文件要求中标人提交履约保证金的最高限额是多少？", "target_store": "faq", "expected_rows": [16], "source": "FAQ 原文", "note": "数字类"}
+{"id": "gs-faq-09", "group": "faq", "category": "中标与合同", "question": "中标人是否可对中标项目进行分包、转包？", "target_store": "faq", "expected_rows": [17], "source": "FAQ 原文", "note": "禁止性规定"}
+{"id": "gs-faq-10", "group": "faq", "category": "质疑投诉", "question": "投诉人进行投诉时，应当提交投诉书，投诉书应当包括哪些内容？", "target_store": "faq", "expected_rows": [19], "source": "FAQ 原文", "note": "材料清单类"}
+{"id": "gs-faq-11", "group": "faq", "category": "质疑投诉", "question": "哪些情形的投诉将不予受理？", "target_store": "faq", "expected_rows": [20], "source": "FAQ 原文", "note": "负面清单类"}
+{"id": "gs-faq-12", "group": "faq", "category": "质疑投诉", "question": "受理投诉的行政监督部门处理投诉的期限是多长？", "target_store": "faq", "expected_rows": [21], "source": "FAQ 原文", "note": "时限类"}
+{"id": "gs-faq-13", "group": "faq", "category": "询价竞价", "question": "在线询价有规定最少几家单位报价？响应供应商家数不足怎么办？", "target_store": "faq", "expected_rows": [46], "source": "FAQ 原文", "note": "两个子问题"}
+{"id": "gs-faq-14", "group": "faq", "category": "询价竞价", "question": "采用询价方式采购货物，可以要求供应商提供样品吗？", "target_store": "faq", "expected_rows": [47], "source": "FAQ 原文", "note": "是否可以类"}
+{"id": "gs-faq-15", "group": "faq", "category": "采购需求", "question": "竞争性磋商采购项目，可以将规模条件作为评审因素吗？", "target_store": "faq", "expected_rows": [51], "source": "FAQ 原文", "note": "合规判断类"}
+{"id": "gs-faq-16", "group": "faq", "category": "采购需求", "question": "公开招标中，采购需求应当包含哪些内容？", "target_store": "faq", "expected_rows": [52], "source": "FAQ 原文", "note": "清单类"}
+{"id": "gs-faq-17", "group": "faq", "category": "质疑投诉", "question": "质疑、询问的答复期限各是多少？", "target_store": "faq", "expected_rows": [56], "source": "FAQ 原文", "note": "两个时限对比"}
+{"id": "gs-faq-18", "group": "faq", "category": "中小企业", "question": "对于既有货物又有服务的采购项目，应当如何判断供应商是否属于中小企业？", "target_store": "faq", "expected_rows": [60], "source": "FAQ 原文", "note": "认定标准类"}
+{"id": "gs-faq-19", "group": "faq", "category": "预算公开", "question": "政府采购必须公开采购预算吗？不公开算违规吗？", "target_store": "faq", "expected_rows": [71], "source": "FAQ 原文", "note": "强制性判断"}
+{"id": "gs-faq-20", "group": "faq", "category": "预算公开", "question": "采购意向必须在采购活动开始前一个月公开吗？", "target_store": "faq", "expected_rows": [72], "source": "FAQ 原文", "note": "时限类"}

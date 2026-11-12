@@ -1,0 +1,30 @@
+/* 全局基础样式：reset + 布局变量 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  font-family:
+    'PingFang SC',
+    'Microsoft YaHei',
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+  font-size: 14px;
+  color: #303133;
+  background: #f5f7fa;
+}
+
+/* 主题令牌（设计稿视觉定稿后仅调此层，技术栈.md #3） */
+:root {
+  --app-primary: #409eff;
+  --app-header-height: 56px;
+}
