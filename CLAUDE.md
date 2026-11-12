@@ -6,6 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 招投标智能问答机器人：FastAPI + Vue 3，RAG + ReAct Agent。C 端流式问答（SSE）、B 端问答维护后台。数据分布在 MySQL（业务表/企业/项目）、PostgreSQL（含「标的物」列的项目表，已启用）、Neo4j（采购交易图谱，可选）与文件型向量索引（`data/index/`）。设计文档在 `docs/`：`系统架构图.md`（分层总览 + 主链路/维护飞轮/部署图，图片在 `docs/assets/`）、`开发文档.md`（模块与接口）、`核心算法.md`（检索/Agent）、`组件工作机制.md`、`技术栈.md`（选型与现状）。
 
+## 固定任务
+
+- 每次修改完成后，都应创建一个对应的 Git commit，便于后续追踪和回滚。
+- commit message 写清「改了什么、为什么」，并与 `CHANGELOG.md` 的条目对应。
+- 提交前先跑 `uv run pytest`；改到检索/模型配置时，追加跑 `evals/run_retrieval_eval.py` 对比基线。
+
 ## 常用命令
 
 ```bash
@@ -36,8 +42,9 @@ uv run python scripts/cluster_unmaintained.py              # 全量，余弦阈�
 uv run python scripts/cluster_unmaintained.py --limit 5    # 只跑最近 5 条（冒烟）
 uv run python scripts/cluster_unmaintained.py --dry-run    # 只聚类，不调模型不写库
 
-# 验证（仓库没有 pytest / lint，下列脚本就是测试入口）
-uv run python scripts/tools_smoke_test.py --dry          # 最快：工具 Schema/注册表/容错，不连库不调模型
+# 验证（三层，从快到慢）
+uv run pytest                                            # 单元测试：116 个，纯逻辑不连库，约 2 秒
+uv run python scripts/tools_smoke_test.py --dry          # 工具 Schema/注册表/容错，不连库不调模型
 uv run python scripts/tools_smoke_test.py                # 结构断言 + 真实工具执行
 uv run python scripts/smoke_test.py "你好"                # Agent 能力层：chitchat 分支
 uv run python scripts/smoke_test.py "供应商提出质疑的时限是多少天？"   # faq 分支
@@ -47,8 +54,10 @@ uv run python scripts/smoke_test.py --deep "…"           # 开深度思考
 uv run python scripts/app_smoke_test.py                  # 应用层全链路（会写库、真实调用一次 LLM）
 uv run python evals/run_eval.py --limit 3                # 评估冒烟；全量见 evals/README.md
 
-# 语法检查（无测试框架时的下限）
-uv run python -m compileall -q src
+# 检索/模型层回归（改了检索或模型配置后跑）
+uv run python evals/run_retrieval_eval.py                # RAG 层 hit@1/3/5 + MRR
+uv run python evals/run_agent_eval.py                    # Agent 层工具/参数命中率
+uv run python evals/check_providers.py                   # 各家 LLM 客户端连通性
 ```
 
 ## 问答主链路（改问答/Agent 时先读这条）
