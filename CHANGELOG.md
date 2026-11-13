@@ -5,6 +5,18 @@
 
 ## 2026-11-13
 
+### 新增：FAQ 直达率评测 + 检索基线更新
+
+- **背景**：汇报要用三个数字（hit@k、平均耗时、FAQ 直达率），前两个取材于现有 `evals/`，但「FAQ 直达率」没有现成指标——路由结果只发 SSE 事件、不落库，无法从线上回算。
+- **改动**：
+  - 新增 `evals/measure_faq_direct.py`：口径与 `agent/agent.py` 阶段零一致（路由判 `faq` → 只查一次 `search_bidding_knowledge(scope="all", top_k=4)` → `assess_quality` 为 `ok` 才算直达）；用例取 golden faq 组 20 条 + dataset 知识库类 3 条，按问题去重共 23 条；`--e2e` 跑完整 `run_agent_stream`，以 timing 中是否出现 `analysis` 阶段判断有没有退回复杂循环。
+  - `evals/README.md`：新增「FAQ 直达率评测」一节；检索基线更新为 2026-11-13 实测值，并标注旧基线（`_prefer_general_law` 加权前）已失效。
+- **实测**：
+  - 检索（40 条，top_k=5）：整体 hit@1 85.0% / hit@3 95.0% / hit@5 95.0% / MRR 0.893；FAQ 组 100%/100%；法规组 70.0%/90.0%（旧基线整体 70.0%/87.5%、法规 40.0%/75.0%）。
+  - FAQ 直达率：路由+检索口径 22/23 = **95.7%**（唯一未直达 `gs-faq-01` 判为 complex）；端到端复跑 23/23 = 100%，差异来自路由模型输出抖动。路由平均 0.38 s，单次检索平均 5.47 s，端到端平均 11.4 s（中位 10.4 s）。
+- **已知口径**：直达率分母是「标注为知识类的问题」，不是全部线上流量；要得到流量口径需在 `qa_record` / `tracking_event` 落库 intent 与是否直达。
+- **测试**：`uv run pytest` **116 个通过**（仅新增评测脚本，未改应用代码）。
+
 ### 新增：项目级 Git MCP 配置（Claude Code）
 
 - **背景**：本机未安装 Git，只有 `D:\workbuddy\resources\vendor\PortableGit` 便携版，且其 `git.exe` 还依赖同一目录 `usr/bin` 下的 Unix 工具。MCP server 在父进程之外拉起子进程时拿不到完整 PATH，直接调 `git` 会「找不到命令」。
