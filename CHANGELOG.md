@@ -3,6 +3,20 @@
 > 按时间倒序。每条写清「改了什么、为什么、影响哪里」——改多了记不住时看这里。
 > 新增改动时在本文件顶部追加一节，格式保持一致。
 
+## 2026-11-13
+
+### 新增：项目级 Git MCP 配置（Claude Code）
+
+- **背景**：本机未安装 Git，只有 `D:\workbuddy\resources\vendor\PortableGit` 便携版，且其 `git.exe` 还依赖同一目录 `usr/bin` 下的 Unix 工具。MCP server 在父进程之外拉起子进程时拿不到完整 PATH，直接调 `git` 会「找不到命令」。
+- **改动**：
+  - `.mcp.json`：注册名为 `git` 的 MCP server，`command` 写 `uvx` 绝对路径，`args` 为 `mcp-server-git -r D:/rag_agent`；`env.PATH` 按顺序显式注入 `PortableGit\mingw64\bin`、`PortableGit\usr\bin`、uvx 所在目录、`System32`、`Windows`。
+  - `.mcp.example.json`：把本机绝对路径换成占位符的模板，供换机后复制成 `.mcp.json`。
+  - `.gitignore`：新增 `.mcp.json`（含本机绝对路径，别人 clone 后无效），模板照常入库。
+- **验证**：按配置真实拉起 server，stdin 发 `initialize` 得到 `serverInfo.name = "mcp-git"`（版本 2026.11.11，协议 2024-11-05）；`tools/list` 返回 **14 个**工具（`git_status` / `git_diff*` / `git_commit` / `git_add` / `git_reset` / `git_log` / `git_create_branch` / `git_checkout` / `git_merge` / `git_show` / `git_branch` / `git_remote`）。`git check-ignore -v .mcp.json` 确认已被忽略。
+- **影响**：仅本地开发工具配置，不涉及应用代码与运行时行为；Claude Code 重启会话后生效（首次会弹授权）。
+- **约束**：未安装 Git，继续使用便携版。
+- **测试**：`uv run pytest` **116 个通过**（未改应用代码，无新增用例）。
+
 ## 2026-11-12
 
 ### 新增：多 provider 路由（前端可混选智谱与 DeepSeek）

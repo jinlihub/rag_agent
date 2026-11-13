@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "git": {
+      "command": "<uvx 的绝对路径，如 C:\\Users\\<用户名>\\.local\\bin\\uvx.exe>",
+      "args": [
+        "mcp-server-git",
+        "-r",
+        "<仓库绝对路径，如 D:/rag_agent>"
+      ],
+      "env": {
+        "PATH": "<Git 的 mingw64/bin>;<Git 的 usr/bin>;<uvx 所在目录>;C:\\Windows\\System32;C:\\Windows"
+      }
+    }
+  }
+}

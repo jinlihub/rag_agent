@@ -31,3 +31,6 @@ _export/
 .pytest_cache/
 .claude/
 *.log
+
+# 本机 MCP 配置（含绝对路径，别人 clone 后不可用；提交模板见 .mcp.example.json）
+.mcp.json
