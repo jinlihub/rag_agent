@@ -230,7 +230,7 @@ def main() -> None:
     ap.add_argument("--limit", type=int, help="只跑前 N 条（冒烟）")
     ap.add_argument("--category", help="只跑指定类别")
     ap.add_argument("--no-judge", action="store_true", help="跳过 LLM 评审")
-    ap.add_argument("--judge-model", default="", help="评审模型（默认 deepseek-chat）")
+    ap.add_argument("--judge-model", default="", help="评审模型（默认 judge.py 的 deepseek-flash）")
     ap.add_argument("--concurrency", type=int, default=2, help="并发数（默认 %(default)s）")
     args = ap.parse_args()
 
@@ -252,7 +252,7 @@ def main() -> None:
     if not args.no_judge:
         print("LLM 评审中（DeepSeek）…")
         try:
-            judge_cases(results, args.judge_model or "deepseek-chat", args.concurrency)
+            judge_cases(results, args.judge_model, args.concurrency)
         except RuntimeError as e:
             print(f"跳过评审: {e}")
 

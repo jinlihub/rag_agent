@@ -9,7 +9,8 @@ evals/
 ├── README.md          # 本文件
 ├── dataset.jsonl      # 评估数据集（每行一个用例，手工维护）
 ├── judge.py           # LLM-as-judge（DeepSeek 独立评审，与被评 Agent 的 GLM 不同厂商）
-├── run_eval.py        # 运行器 CLI
+├── run_eval.py        # 运行器 CLI（明细型：JSONL + Markdown + Excel）
+├── run_agent_report.py    # 汇报型：工具选择 + RAGAS 三维 + 延迟 → Agent评估报告.txt
 ├── measure_faq_direct.py  # FAQ 直达率：路由是否判对、单次检索是否达标
 └── reports/           # 每轮评估的报告产物（gitignore）
 ```
@@ -68,6 +69,50 @@ uv run python evals/measure_faq_direct.py --e2e    # 跑完整 Agent，统计端
 | 端到端平均耗时（直达样本） | 11.4 s，中位 10.4 s |
 
 两个口径的差异来自路由分类的模型输出抖动（temperature=0 下仍偶有不同标签），汇报取 95.7% 这一保守值。**分母是「标注为知识类的问题」，不是全部线上流量**——若要得到真实流量口径的直达率，需要在 `qa_record` 或 `tracking_event` 里落库 intent 与是否直达。
+
+## 综合评估报告（Agent评估报告.txt）
+
+`run_agent_report.py` 面向「一页说清现状」：同一套 `dataset.jsonl` 用例、同一个 `run_agent_stream`，
+把结果压成 6 个数字和两张表，写到仓库根目录的 `Agent评估报告.txt`（可用 `--out` 改路径）。
+
+```bash
+uv run python evals/run_agent_report.py              # 全量 14 条，约 2-3 分钟
+uv run python evals/run_agent_report.py --limit 3    # 冒烟
+uv run python evals/run_agent_report.py --no-judge   # 只出工具与延迟（不花评审 token）
+```
+
+**指标口径**
+
+| 指标 | 来源 | 定义 |
+| --- | --- | --- |
+| 工具选择准确率 | 自动 | 声明了 `expect_tools` 的用例中，实际调用命中其一的占比；寒暄/无关类不参与，单列误调用数 |
+| Faithfulness | DeepSeek 评审 | 回答的事实断言能否被检索来源支撑；来源外编造记 0 |
+| Relevancy | DeepSeek 评审 | 回答是否直接回应问题（不跑题、不空泛） |
+| Recall | DeepSeek 评审 | 检索来源是否覆盖参考要点所需信息；**未调用工具的用例不适用**，不计 0 分 |
+| 综合评分 | 计算 | 三个 RAG 维度全部有效值的均值 |
+| Agent 评分 | 计算 | `0.6 × 综合评分 + 0.4 × 工具选择准确率` |
+
+评审上下文取**工具返回的原文节选**（评测进程内挂了 `BaseTool.execute` 钩子采集，见脚本注释），
+不是只有标题——只给标题会让忠实度和召回无法核实、分数虚低。
+
+**基线（2026-11-18，14 条，单次运行）**
+
+| 指标 | 结果 |
+| --- | --- |
+| 工具选择准确率 | 11/11（100%）；另 3 条无需工具用例无误调用 |
+| Faithfulness | 0.67（有效 14/14） |
+| Relevancy | 0.94（有效 14/14） |
+| Recall | 0.83（有效 11/11，3 条未检索不适用） |
+| 平均延迟 | 13.7 s（min 2.5 / max 26.8 / 中位 13.5） |
+| 综合评分 | 0.81 / 1.00 |
+| Agent 评分 | 0.89 |
+
+- 评测是单次采样，评审与被评模型都有输出抖动（同一批用例连跑，Faithfulness 在 0.48~0.67 间波动过一次），
+  对外引用建议连跑 2~3 次取中位，或标注「单次运行」。
+- 低分项已核实为真实问题，不是评分假象：`web-002` 联网检索没兜住、模型凭记忆给网址（Faith 0）；
+  `rb-003` 正确拒答围标请求，但引用的法条编号有误（Faith 0）。
+- `dataset.jsonl` 里「空调采购」「采购最多标的物」等 4 条原先只声明了单一期望工具，与
+  `agent_set.jsonl` 的判断（PG 与图谱均可）矛盾，已改为两种工具都算命中。
 
 ## 评估维度
 
