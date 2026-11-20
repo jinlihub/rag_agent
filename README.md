@@ -1,8 +1,107 @@
 # rag-agent · 招投标智能问答机器人
 
-基于 LLM + Agent + RAG 的招投标智能问答服务。C 端对话问答 + B 端维护后台。
+基于 LLM + Agent + RAG 的招投标垂直领域问答服务。C 端对话问答（SSE 流式）+ B 端问答维护后台。
 
-文档见 [docs/开发文档.md](docs/开发文档.md)（做什么）、[docs/技术栈.md](docs/技术栈.md)（用什么做）、[docs/部署.md](docs/部署.md)（怎么上线）。
+**不是又一个"框架搭起来的 RAG demo"**：检索权重、意图路由、评测体系都是按数据调出来的，下面每个数字都有对应的脚本可复现。
+
+---
+
+## 核心指标
+
+### 检索层（RAG，40 条人工标注用例）
+
+| 指标 | 数值 | 说明 |
+| --- | ---: | --- |
+| **hit@1** | **85.0%** | 正确答案排在首位 |
+| **hit@5** | **95.0%** | 前 5 条内命中 |
+| **MRR** | **0.893** | 平均倒数排名 |
+| 法规组 hit@1 | **70.0%** | 由 50% → 70%（通用法加权后的提升） |
+| FAQ 组 hit@1 | 100.0% | 82 条问答对，语料小但密 |
+
+### Agent 层（20 条用例，8 个类别）
+
+| 指标 | 数值 | 说明 |
+| --- | ---: | --- |
+| **工具命中率** | **95.0%** | 该调的工具调了 |
+| 首选工具率 | 90.0% | 第一个调的就是对的 |
+| **参数命中率** | **95.0%** | 关键参数落位 |
+| 平均调用次数 | 1.00 | 无冗余调用 |
+
+### 性能
+
+| 项 | 数值 |
+| --- | ---: |
+| 向量检索（4954 条 × 2048 维） | **P50 2.25 ms** |
+| 单次检索中向量检索占比 | **0.5%**（瓶颈在 embedding API，450 ms） |
+| 端到端问答 | 约 26 s（含多轮工具） |
+
+### 工程
+
+| 项 | 数值 |
+| --- | ---: |
+| 单元测试 | **116 个**，1.3 秒跑完 |
+| 代码量 | 后端 5,705 行 / 前端 4,047 行 / 评测 2,452 行 |
+| 数据规模 | 项目 8,789 条 · 法条 4,954 条 · 政策 643 条 · FAQ 82 条 |
+
+---
+
+## 三个技术取舍（面试可讲的部分）
+
+### ① 通用法被行业办法压制 → 加权解决
+
+**问题**：用户问"招标公告要发在哪"，检索前列全是《铁路工程…办法》《水利工程…规定》，通用法《招标投标法》排到第 7 位。
+
+**诊断**：行业办法的标题与问题词面更接近，BM25 天然占优；但用户没提行业时，说明他要的就是通用规则。
+
+**解法**：检测问题里有没有行业词（铁路/水利/公路/通信…），没有就给《招标投标法》《政府采购法》加 1.1 权重。
+
+**验证**：法规组 hit@1 **50% → 70%**，且用户明确提行业时不干预（有测试锁定）。
+
+### ② 意图分类对但执行范围错
+
+**问题**：问"投标保证金不得超过多少"，被判为 FAQ 类，只查了 82 条问答对，一条法规没查，答"未在检索结果中提及"。
+
+**根因**：分类器判 `faq` 是对的（问法像 FAQ），但执行时把范围锁死成 FAQ 库。
+
+**解法**：FAQ 分类的检索范围从 `faq` 改为 `all`——FAQ 没命中就自然落到法规库。
+
+**验证**：同类问题从"未提及"变为答出具体条款。
+
+### ③ 一个 base_url 只能对一家厂商 → provider 抽象
+
+**问题**：前端想做模型下拉，但配置里只有一个 `LLM_BASE_URL`，切 DeepSeek 就得整个系统切过去。
+
+**解法**：`provider_of(model_id)` 建立"模型 → 厂商"映射，`get_client_for(provider)` 按厂商缓存客户端。工具轮与作答各自按自己的模型路由。
+
+**结果**：前端可混选智谱 4 个 + DeepSeek 2 个；新增一家厂商只需在 `_BUILDERS` 登记一行。
+
+---
+
+## 架构
+
+```
+用户提问
+  ↓
+意图路由（规则 + LLM）  ── 寒暄 / FAQ / 复杂
+  ↓
+ReAct 循环（最多 4 轮）
+  ├─ search_bidding_knowledge  向量 + BM25 混合检索（法条/政策/FAQ）
+  ├─ search_postgresql         项目表筛选与聚合（8,789 条）
+  ├─ search_knowledge_graph    标的物关系（Neo4j）
+  ├─ search_web                Tavily / Exa 联网兜底
+  └─ ask_user                  指代不明时反问
+  ↓
+防幻觉三层
+  ├─ 提示词：只能用检索结果，不得编造
+  ├─ 质量关卡：结果不达标就换工具或如实告知
+  └─ 空结果：明确说"未查到"，不给推测
+  ↓
+SSE 流式输出（status / analysis / sources / delta / timing / done）
+```
+
+**检索层**：numpy 向量 + BM25 → RRF 融合（按问题类型动态切 k 与权重）→ LLM 重排。
+
+---
 
 ## 快速开始
 
@@ -10,42 +109,74 @@
 # 1. 安装依赖
 uv sync
 
-# 2. 配置环境变量（数据库 / LLM API）
-cp .env.example .env   # 然后填写 .env
+# 2. 配置环境变量
+cp .env.example .env   # 填写数据库 / LLM API
 
-# 3. 导入训练数据（标的物 8790 条 + 问答对 82 条）到 MySQL
+# 3. 导入数据（标的物 8790 条 + 问答对 82 条）
 uv run python scripts/import_xlsx_to_mysql.py
-
-# 4. 初始化应用表（user_account / qa_record / tracking_event，并播种管理员 admin/admin123）
 uv run python scripts/init_db.py
 
-# 5. 构建知识库向量索引（法条 / 政策 / 问答对，需 LLM embedding 可用）
+# 4. 构建向量索引
 uv run python scripts/build_index.py
 
-# 6. 启动服务（一键脚本，同时拉起前后端，就绪后自动打开浏览器）
-bash start.sh              # 另有: bash start.sh status | stop | restart
+# 5. 启动（前后端一起，就绪后自动开浏览器）
+bash start.sh
 
-#    或只启后端（手动方式，前端见下一节）
-uv run uvicorn rag_agent.api.main:app --host 127.0.0.1 --port 8000 --reload --reload-dir src
-
-# 7. 冒烟测试
-uv run python scripts/smoke_test.py "近半年安徽合肥区域有哪些企业中标？"        # RAG 能力层（免登录）
-uv run python scripts/app_smoke_test.py                                   # 应用层全链路（注册/问答/后台维护）
+# 6. 验证
+uv run pytest                                    # 116 个单元测试
+uv run python evals/run_retrieval_eval.py        # RAG 层：hit@1/3/5 + MRR
+uv run python evals/run_agent_eval.py            # Agent 层：工具/参数命中率
 ```
 
-## 前端（Vue 3 + Element Plus）
+前端：
 
 ```bash
-cd frontend
-npm install        # 首次
-npm run dev        # http://localhost:5173（/api 代理到 127.0.0.1:8000）
-npm run build      # 类型检查 + 产物构建
+cd frontend && npm install && npm run dev   # http://localhost:5173
 ```
-
-账号：测试管理员 `admin / admin123`（scripts/init_db.py 播种）；C 端在登录页注册。
 
 | 路由 | 页面 |
 | --- | --- |
 | `/login` | 登录 / 注册 |
-| `/chat` | C 端问答（SSE 流式渲染、来源引用、发送埋点） |
-| `/admin/qa-list` | B 端维护后台（筛选 / 标记正确 / 编辑 / 不需要维护 / 分页） |
+| `/chat` | C 端问答（SSE 流式、来源引用、图表、耗时） |
+| `/admin/qa-list` | B 端维护（筛选 / 标记正确 / 按簇批量处理） |
+
+测试账号：`admin / admin123`
+
+---
+
+## 评测方法（可复现）
+
+| 脚本 | 做什么 |
+| --- | --- |
+| `evals/run_retrieval_eval.py` | 40 条用例跑 hit@1/3/5 与 MRR |
+| `evals/run_agent_eval.py` | 20 条用例跑工具/参数命中率 |
+| `evals/compare_tool_calling.py` | 同 prompt 同工具，对比不同模型的工具选择 |
+| `evals/diagnose_one.py` | 单条问题看召回→加权→重排全链路 |
+| `evals/bench_retrieval.py` | 索引体积、加载耗时、检索延迟 |
+
+用例集：`evals/golden_set.jsonl`（40 条，20 法规 + 20 FAQ）、`evals/agent_set.jsonl`（20 条，8 类别）。
+
+---
+
+## 文档
+
+| 文档 | 内容 |
+| --- | --- |
+| [开发文档](docs/开发文档.md) | 模块职责、接口、数据对象 |
+| [技术栈](docs/技术栈.md) | 选型理由与现状 |
+| [部署](docs/部署.md) | 上线步骤与踩坑 |
+| [选型-embedding与向量库](docs/选型-embedding与向量库.md) | 为什么不用向量数据库（实测数据） |
+| [调研-开源模型](docs/调研-开源模型与工具调用.md) | 4B 本地模型实测对比 |
+| [核心算法](docs/核心算法.md) | 检索与 Agent 细节 |
+| [CHANGELOG](CHANGELOG.md) | 按日记录的改动与决策 |
+
+---
+
+## 已知限制
+
+| 项 | 说明 |
+| --- | --- |
+| 数据时间范围 | 仅 2023-10-09 ~ 2023-10-20（12 天），时效类问题的答案必然集中于此 |
+| 单进程 | 限流/缓存状态在进程内，只能 `--workers 1` |
+| 未做 PDF 解析 | 知识库只收法条文本，扫描件/PDF 无法入库 |
+| 单账号 | 仅有 admin，未做多用户注册与数据隔离 |
