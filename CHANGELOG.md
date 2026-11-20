@@ -14,7 +14,7 @@
   - `start_frontend` 改为直接 `node node_modules/vite/bin/vite.js`，绕过 npm 包装进程与版本检查（实测快约 0.5 s），npm 不可用时也能启动；`vite.js` 不存在时退回 `npm run dev`。
   - 启动前检查 5173 是否已被其他进程占用：`strictPort` 下 vite 会直接退出，提前提示执行 `bash start.sh stop`，避免又一次 60 秒空等。
 - **实测**：冷启动（stop → start，后端 + 前端全链路）由「68 s 后失败」变为 **2.7 s 成功**；服务已在运行时 `bash start.sh` 0.75 s；页面 `http://localhost:5173/` 与 `/api/health` 代理均 200。
-- **遗留**：用户环境变量里那一条坏 PATH 仍在，建议把 `C:\Program Files\nodejs` 重新加一遍（或修掉 `C:\` 被截断的条目），否则其他 Git Bash 脚本仍找不到 node/npm。
+- **环境修复**：系统级 PATH 里那条 `Program Files\nodejs\` 缺了盘符（改它需要管理员权限），已在**用户级 PATH** 追加 `C:\Program Files\nodejs`（用户级优先于系统级）并广播 `WM_SETTINGCHANGE`，无需管理员即可生效；原 PATH 备份在 `C:\Users\xing\path-backup-20261120_093041.txt`。已经打开的终端要重开（或重新登录）才会读到新值。系统级那条坏条目仍建议由管理员清掉。
 - **测试**：`uv run pytest` 116 个通过（未改应用代码）。
 
 ## 2026-11-18
