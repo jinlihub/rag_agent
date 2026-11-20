@@ -27,6 +27,38 @@
 | **参数命中率** | **95.0%** | 关键参数落位 |
 | 平均调用次数 | 1.00 | 无冗余调用 |
 
+### RAGAS 三维（14 条，DeepSeek 独立评审）
+
+| 指标 | 数值 | 说明 |
+| --- | ---: | --- |
+| **Faithfulness** | **0.67** | 回答是否忠于检索原文 |
+| **Answer Relevancy** | **0.94** | 是否答到了问题上 |
+| **Context Recall** | **0.83** | 检索是否覆盖答案所需信息 |
+| 综合评分 | **0.81** | 三维有效值均值 |
+| Agent 评分 | **0.89** | 0.6 × 综合 + 0.4 × 工具准确率 |
+
+分类别看，**知识库类最稳（Faith 0.97）**，联网类最弱（Faith 0.42 / Recall 0.28）——外部网页内容噪声大，是当前最短板。
+
+| 类别 | 条数 | 工具命中 | Faith | Relev | Recall | 延迟 |
+| --- | ---: | --- | ---: | ---: | ---: | ---: |
+| 知识库 | 3 | 3/3 | **0.97** | 1.00 | 0.98 | 9.5 s |
+| 中标记录 | 3 | 3/3 | 0.62 | 0.95 | 0.88 | 16.9 s |
+| 知识图谱 | 3 | 3/3 | 0.63 | 0.97 | 1.00 | 20.2 s |
+| 联网 | 2 | 2/2 | 0.42 | 0.88 | 0.28 | 18.4 s |
+| 鲁棒性 | 3 | — | 0.63 | 0.87 | — | 5.2 s |
+
+> 口径：Faithfulness / Relevancy / Recall 为 RAGAS 口径的 0~1 分，评审上下文是工具返回的原文节选（非标题）；工具准确率只统计声明了 `expect_tools` 的用例，寒暄/无关/违规类单列误调用数（本次 0 条）。
+
+### 端到端
+
+| 指标 | 数值 | 说明 |
+| --- | ---: | --- |
+| **FAQ 直达率** | **95.7%** | 22/23，路由判 faq 且单次检索达标即直达，不进 ReAct 循环 |
+| 路由耗时 | 0.38 s | 意图分类 |
+| 检索耗时 | 5.47 s | 混合检索 + 重排 |
+| 端到端 | 11.4 s | 含流式生成 |
+| Agent 端到端均值 | 13.7 s | 14 条用例，P50 13.5 s，最长 26.8 s |
+
 ### 性能
 
 | 项 | 数值 |
@@ -151,11 +183,13 @@ cd frontend && npm install && npm run dev   # http://localhost:5173
 | --- | --- |
 | `evals/run_retrieval_eval.py` | 40 条用例跑 hit@1/3/5 与 MRR |
 | `evals/run_agent_eval.py` | 20 条用例跑工具/参数命中率 |
+| `evals/run_agent_report.py` | 14 条用例跑 RAGAS 三维 + 工具准确率 + 延迟，输出综合报告 |
+| `evals/measure_faq_direct.py` | FAQ 直达率（路由 + 单次检索质量），`--e2e` 走完整链路 |
 | `evals/compare_tool_calling.py` | 同 prompt 同工具，对比不同模型的工具选择 |
 | `evals/diagnose_one.py` | 单条问题看召回→加权→重排全链路 |
 | `evals/bench_retrieval.py` | 索引体积、加载耗时、检索延迟 |
 
-用例集：`evals/golden_set.jsonl`（40 条，20 法规 + 20 FAQ）、`evals/agent_set.jsonl`（20 条，8 类别）。
+用例集：`evals/golden_set.jsonl`（40 条，20 法规 + 20 FAQ）、`evals/agent_set.jsonl`（20 条，8 类别）、`evals/dataset.jsonl`（14 条，RAGAS 评审用）。
 
 ---
 
