@@ -34,3 +34,6 @@ _export/
 
 # 本机 MCP 配置（含绝对路径，别人 clone 后不可用；提交模板见 .mcp.example.json）
 .mcp.json
+
+# 业务数据（招投标原始数据，不随仓库分发）
+data/

@@ -112,7 +112,8 @@ uv sync
 # 2. 配置环境变量
 cp .env.example .env   # 填写数据库 / LLM API
 
-# 3. 导入数据（标的物 8790 条 + 问答对 82 条）
+# 3. 准备数据（仓库不含招投标原始数据，需自备）
+#    将 xlsx 放到 data/processed/，表结构见 scripts/import_xlsx_to_mysql.py 的字段映射
 uv run python scripts/import_xlsx_to_mysql.py
 uv run python scripts/init_db.py
 
@@ -176,6 +177,7 @@ cd frontend && npm install && npm run dev   # http://localhost:5173
 
 | 项 | 说明 |
 | --- | --- |
+| **数据不随仓库分发** | 招投标原始数据（8,789 条项目 / 4,954 条法条）未包含在仓库中，需自行准备；代码与评测用例完整 |
 | 数据时间范围 | 仅 2023-10-09 ~ 2023-10-20（12 天），时效类问题的答案必然集中于此 |
 | 单进程 | 限流/缓存状态在进程内，只能 `--workers 1` |
 | 未做 PDF 解析 | 知识库只收法条文本，扫描件/PDF 无法入库 |
