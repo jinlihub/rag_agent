@@ -3,6 +3,20 @@
 > 按时间倒序。每条写清「改了什么、为什么、影响哪里」——改多了记不住时看这里。
 > 新增改动时在本文件顶部追加一节，格式保持一致。
 
+## 2026-11-20
+
+### 修复：前端启动卡满 60 秒超时（start.sh 找不到 node）
+
+- **现象**：`bash start.sh` 要等 68 秒才退出，前端打不开；`.run/frontend.log` 只有一行 `nohup: failed to run command 'npm': No such file or directory`，后端 8000 正常。
+- **根因**：Git Bash 的 PATH 里 nodejs 目录是坏的——`/c:Program Files/nodejs`（Windows PATH 以 `C:\...` 形式混入，转换后 `C:` 被当成目录名），所以 `node`/`npm` 都不在 PATH；`start.sh` 的 `nohup npm run dev` 立即失败，而 `wait_for` 仍按 60 次 × 1 秒轮询，表现为「启动很久然后失败」。
+- **改动**（`start.sh`）：
+  - 新增 `ensure_node`：`node` 不在 PATH 时，依次探测 `C:\Program Files\nodejs`、`C:\Program Files (x86)\nodejs`、`%LOCALAPPDATA%\Programs\nodejs`、nvm-windows 版本目录并补进 PATH；都找不到就立即报错，不再空等 60 秒。
+  - `start_frontend` 改为直接 `node node_modules/vite/bin/vite.js`，绕过 npm 包装进程与版本检查（实测快约 0.5 s），npm 不可用时也能启动；`vite.js` 不存在时退回 `npm run dev`。
+  - 启动前检查 5173 是否已被其他进程占用：`strictPort` 下 vite 会直接退出，提前提示执行 `bash start.sh stop`，避免又一次 60 秒空等。
+- **实测**：冷启动（stop → start，后端 + 前端全链路）由「68 s 后失败」变为 **2.7 s 成功**；服务已在运行时 `bash start.sh` 0.75 s；页面 `http://localhost:5173/` 与 `/api/health` 代理均 200。
+- **遗留**：用户环境变量里那一条坏 PATH 仍在，建议把 `C:\Program Files\nodejs` 重新加一遍（或修掉 `C:\` 被截断的条目），否则其他 Git Bash 脚本仍找不到 node/npm。
+- **测试**：`uv run pytest` 116 个通过（未改应用代码）。
+
 ## 2026-11-18
 
 ### 新增：Agent 综合评估报告（Agent评估报告.txt）

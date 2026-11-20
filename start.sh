@@ -34,6 +34,32 @@ ensure_deps() {
   }
 }
 
+# Git Bash 的 PATH 不一定含 node：Windows PATH 若被写成 C:\... 形式，
+# 转换后会变成 /c:Program Files/nodejs 这种不存在的目录，npm 就找不到了。
+# 这里显式探测常见安装位置补进 PATH，找不到就直接报错，避免空等 60 秒超时。
+ensure_node() {
+  command -v node >/dev/null 2>&1 && return 0
+  local cand
+  for cand in \
+    "/c/Program Files/nodejs" \
+    "/c/Program Files (x86)/nodejs" \
+    "$HOME/AppData/Local/Programs/nodejs" \
+    "$HOME/AppData/Roaming/nvm/current"; do
+    if [ -x "$cand/node.exe" ]; then
+      export PATH="$cand:$PATH"
+      return 0
+    fi
+  done
+  # nvm-windows 的版本目录（.../nvm/v22.22.2/node.exe），取最新一个
+  for cand in "$HOME"/AppData/Roaming/nvm/v*/; do
+    if [ -x "$cand/node.exe" ]; then
+      export PATH="$cand:$PATH"
+      return 0
+    fi
+  done
+  return 1
+}
+
 start_backend() {
   if backend_up; then log "✓ 后端已在运行  $BACKEND_URL"; return 0; fi
   log "启动后端 → $BACKEND_URL （日志 .run/backend.log）"
@@ -44,8 +70,20 @@ start_backend() {
 
 start_frontend() {
   if frontend_up; then log "✓ 前端已在运行  $FRONTEND_URL"; return 0; fi
+  # 端口被别的进程占着但页面打不开：vite 的 strictPort 会直接退出，
+  # 再等 60 秒只是白等，这里提前给出可操作的提示。
+  if netstat -ano 2>/dev/null | grep -q ":$FRONTEND_PORT[[:space:]].*LISTENING"; then
+    die "端口 $FRONTEND_PORT 已被占用但页面不可访问，请先执行 bash start.sh stop"
+  fi
+  ensure_node || die "未找到 node：请安装 Node.js，或把安装目录（如 C:\\Program Files\\nodejs）加入 PATH"
   log "启动前端 → $FRONTEND_URL （日志 .run/frontend.log）"
-  (cd frontend && nohup npm run dev >"$RUN/frontend.log" 2>&1) &
+  # 直接调 vite 而不走 `npm run dev`：省掉 npm 包装进程与版本检查（实测启动快约 0.5s），
+  # 也避免 npm 不在 PATH、但 node 在时的旧问题。
+  if [ -f "$ROOT/frontend/node_modules/vite/bin/vite.js" ]; then
+    (cd frontend && nohup node node_modules/vite/bin/vite.js >"$RUN/frontend.log" 2>&1) &
+  else
+    (cd frontend && nohup npm run dev >"$RUN/frontend.log" 2>&1) &
+  fi
   echo $! >"$RUN/frontend.pid"
 }
 
